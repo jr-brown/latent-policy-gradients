@@ -1,0 +1,75 @@
+CLAUDE.md
+converted_google_docs/
+latex_files/iclr2026
+research_scaffold_dev
+tools
+
+wandb/
+local/
+models/
+!src/**/models/
+!analysis/models/
+**/*.pdf
+**/*.log
+**/*.aux
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+PYTHONPATH
+uv.lock
+.python-version
+
+# Virtual Environment
+venv
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environment variables
+.env
+
+# Models and logs
+*.h5
+*.pkl
+*.pth
+logs/
+checkpoints/
+runs/
+.tensorboard/
+.tensorboard_logs/
+distilled_models/
+
+# OS
+.DS_Store
+Thumbs.db

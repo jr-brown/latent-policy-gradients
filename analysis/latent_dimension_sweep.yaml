@@ -1,0 +1,14 @@
+name: "latent_dimension_sweep"
+function_name: "sweep_latent_dimension"
+
+function_kwargs:
+  latent_dimensions: [1, 2, 3, 4, 5, 6, 8, 10, 16, 32]
+  num_epochs: 3
+  seed: 42
+  no_goal_mode: "full_distribution"
+  offline: true
+
+  get_runs_from_wandb_kwargs:
+    name_regex_filter: "maze_eval_"
+    wandb_filters:
+      "displayName": {"$regex": "^maze_eval_"}

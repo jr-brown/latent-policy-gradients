@@ -1,0 +1,22 @@
+name: "plot_kl_integration"
+function_name: "plot_kl_loss_over_integration_steps"
+time_stamp_name: false
+
+function_kwargs:
+  pipelines:
+    #- "red_cross"
+    - "blue_diamond_then_red_cross"
+    - "red_diamond_then_red_cross"
+    #- "red_cross_then_black_diamond"
+    - "red_cross_then_red_diamond"
+
+  output_path: "local/plots/kl_integration.png"
+  max_integration_steps: 100
+  step_interval: 5
+  plot_goal_probability: true
+
+  plot_kwargs:
+    figsize: [10, 6]
+    show_grid: true
+    xlabel: "Integration Steps"
+    # ylabel will use default based on plot_goal_probability

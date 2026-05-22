@@ -1,0 +1,20 @@
+name: "fit_klr_randinit"
+function_name: "fit_developmental_model"
+
+function_kwargs:
+  model_type: "multi_kl"
+  num_epochs: 3
+  kfold_agent_validation: True
+  holdout_env_validation: True
+  single_stage_to_multi_stage_validation: True
+  no_distractor_to_distractor_validation: True
+
+  model_kwargs:
+    value_function:
+      init: "random_gaussian"
+      seed: 42
+
+  get_runs_from_wandb_kwargs:
+    name_regex_filter: "maze_eval_"
+    wandb_filters:
+      "displayName": {"$regex": "^maze_eval_"}

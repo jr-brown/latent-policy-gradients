@@ -1,0 +1,26 @@
+name: "plot_training_curves"
+function_name: "plot_pipeline_training_curves"
+time_stamp_name: false
+
+function_kwargs:
+  pipelines:
+    #- "maze_ppo_red_cross"
+    - "maze_ppo_blue_diamond_distill_then_red_cross"
+    - "maze_ppo_red_diamond_distill_then_red_cross"
+    #- "maze_ppo_red_cross_distill_then_black_diamond"
+    - "maze_ppo_red_cross_distill_then_red_diamond"
+
+  get_runs_from_wandb_kwargs:
+    wandb_filters:
+      "displayName": {"$regex": "^maze_ppo"}
+
+  output_path: "local/plots/training_curves.png"
+  metric_key: "rollout/ep_rew_mean"
+  x_key: "global_step"
+  n_samples: 500
+
+  plot_kwargs:
+    figsize: [8, 5]
+    show_grid: true
+    transition_marker_style: "vline"
+    smooth_scaling: 1.0

@@ -1,0 +1,18 @@
+name: "no_goal_test_without_feature_full_dist"
+function_name: "fit_developmental_model"
+
+function_kwargs:
+  model_type: "multi_kl"
+  num_epochs: 3
+  no_goal_mode: "full_distribution"
+  include_no_goal_feature: False
+
+  compute_baselines: True
+  baselines_epoch_scaling: 3
+
+  save_name: "without_feature_full_dist"
+
+  get_runs_from_wandb_kwargs:
+    name_regex_filter: "maze_eval_"
+    wandb_filters:
+      "displayName": {"$regex": "^maze_eval_"}

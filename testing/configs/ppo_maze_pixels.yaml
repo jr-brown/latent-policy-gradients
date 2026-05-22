@@ -1,0 +1,38 @@
+name: "test_maze_ppo_pixels"
+function_name: "train_rl_agent"
+time_stamp_name: False
+
+function_kwargs:
+  venv_kwargs:
+    env_id: "Maze-v0"
+    n_envs: 4
+    vec_env_cls: "SubprocVecEnv"
+    env_kwargs:
+      size: 5
+      observation_mode: "image"
+  
+  get_agent_kwargs:
+    algorithm: "PPO"
+    create_agent_kwargs:
+      policy: "CnnPolicy"
+      learning_rate: 0.0001
+      n_steps: 256
+      batch_size: 64
+      n_epochs: 10
+      gamma: 0.95
+      gae_lambda: 0.9
+      clip_range: 0.2
+      ent_coef: 0.01
+      vf_coef: 0.5
+      max_grad_norm: 0.5
+
+  agent_train_kwargs:
+    total_timesteps: 1_000_000
+    log_interval: 10
+  
+  checkpoint_freq: 100_000
+  checkpoint_dir: "testing/checkpoints/RUN_NAME"
+
+  eval_policy_kwargs:
+    n_episodes: 100
+    log_rewards: True

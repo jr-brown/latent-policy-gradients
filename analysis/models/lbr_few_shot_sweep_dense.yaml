@@ -1,0 +1,34 @@
+name: "few_shot_sweep_dense_multi_kl_model"
+function_name: "fit_developmental_model"
+
+function_kwargs:
+  model_type: "multi_kl"
+  num_epochs: 3
+  save_name: "RUN_NAME"
+  # Use only the local pushed cache (run_env_metrics_cache.json); never
+  # contact the wandb API (no API key on the pod).
+  offline: true
+  # Fit in full_distribution (3-way) mode. Per sweep point we additionally
+  # report the fitted model's 3-way KL and 2-way-renormalised KL (post-hoc),
+  # mirroring the elo report's Experiment 2 methodology.
+  no_goal_mode: "full_distribution"
+  model_kwargs:
+    value_function:
+      structure: "upper_triangular"
+
+  # Dense few-shot sweep for the sample-efficiency report.
+  # agent_counts spans 1 -> 100 (of ~297 total agents) to trace the
+  # learning curve of how few training agents the multi_kl model needs.
+  # n_trials_per_size: 5. The earlier unweighted run showed that even at the
+  # noisiest point (n=1) the standard error across 10 trials was only ~1.2% of
+  # the mean; with 5 trials it is ~1.7% (x sqrt(2)) -- still well-resolved --
+  # while ~halving the dual-metric runtime on the 2-vCPU pod.
+  few_shot_sweep_kwargs:
+    agent_counts: [1, 2, 5, 10, 20, 50, 100]
+    n_trials_per_size: 5
+    seed: 42
+
+  get_runs_from_wandb_kwargs:
+    name_regex_filter: "maze_eval_"
+    wandb_filters:
+      "displayName": {"$regex": "^maze_eval_"}

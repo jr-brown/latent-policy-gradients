@@ -1,0 +1,5 @@
+lbr - Linear Boltzmann Rational (AKA MultiChoiceKLModel or derivatives)
+rkl - Reversed KL (i.e., policy gradient direction not information coding direction)
+ns - Native Saliency
+no_val - No validation experiments done, just full model fit (much faster for quick results)
+

@@ -1,0 +1,29 @@
+name: "val_lbr_memoryless_full_dist"
+function_name: "fit_developmental_model"
+
+function_kwargs:
+  model_type: "multi_kl"
+  num_epochs: 3
+  no_goal_mode: "full_distribution"
+  compute_baselines: false
+  offline: true
+  save_name: "val_lbr_memoryless_full_dist"
+
+  model_kwargs:
+    pipeline_mode: "memoryless"
+
+  kfold_agent_validation: true
+  agent_kfold_splits: 4
+  holdout_env_validation: true
+  env_holdout_fraction: 0.1
+  single_stage_to_multi_stage_validation: true
+  no_distractor_to_distractor_validation: true
+  few_shot_kwargs:
+    n_train_agents: 32
+    n_trials: 3
+    seed: 42
+
+  get_runs_from_wandb_kwargs:
+    name_regex_filter: "maze_eval_"
+    wandb_filters:
+      "displayName": {"$regex": "^maze_eval_"}

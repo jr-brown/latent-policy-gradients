@@ -1,0 +1,25 @@
+name: "few_shot_sweep_dense_n0"
+function_name: "fit_developmental_model"
+
+# n=0 point: how well the untrained initial hyperparameters fit the data.
+# Deterministic, no training, no sweep -> one compute_per_agent_weights pass.
+function_kwargs:
+  model_type: "multi_kl"
+  num_epochs: 3
+  save_name: "RUN_NAME"
+  offline: true
+  skip_main_training: true
+  no_goal_mode: "full_distribution"
+  model_kwargs:
+    value_function:
+      structure: "upper_triangular"
+
+  few_shot_sweep_kwargs:
+    agent_counts: [0]
+    n_trials_per_size: 1
+    seed: 42
+
+  get_runs_from_wandb_kwargs:
+    name_regex_filter: "maze_eval_"
+    wandb_filters:
+      "displayName": {"$regex": "^maze_eval_"}

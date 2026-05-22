@@ -1,0 +1,11 @@
+name: "test"
+function_name: "play_maze"
+
+function_kwargs:
+  size: 8
+  target_image_size: 128
+  # distractors: ["green_hollow-diamond"]
+  # distractor_probability: 0.5
+  agent: "grey_circle"
+  goals: ["red_cross"]
+

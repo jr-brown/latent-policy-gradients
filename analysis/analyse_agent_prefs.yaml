@@ -1,0 +1,128 @@
+name: "analyse_agent_preferences"
+function_name: "analyse_agent_preferences"
+
+function_kwargs:
+  show_title: False  # True
+
+  get_runs_from_wandb_kwargs:
+    name_regex_filter: "maze_eval_"
+    wandb_filters:
+      "displayName": {"$regex": "^maze_eval_"}
+      #"createdAt": {"$gte": "2025-11-11T00:00:00"}
+  
+  plot_per_run_scores: False  # True
+
+  comparison_groups:
+    # Different features have different saliency
+    red_cross_vs_red_diamond:
+      patterns:
+        - "^red_cross$"
+        - "^red_diamond$"
+      features_to_show:
+        - "red"
+        - "cross"
+        - "diamond"
+    # Unrelated old values are preserved
+    blue_diamond_vs_blue_diamond_then_red_cross_vs_red_cross:
+      patterns:
+        - "^blue_diamond$"
+        - "^blue_diamond_then_red_cross$"
+        - "^red_cross$"
+      features_to_show:
+        - "blue"
+        - "red"
+        - "diamond"
+        - "cross"
+    # Past training objectives influence generalisation on new ones
+    red_cross_vs_red_diamond_then_red_cross:
+      patterns:
+        - "^red_cross$"
+        - "^red_diamond_then_red_cross$"
+      features_to_show:
+        - "red"
+        - "cross"
+        - "diamond"
+    # Combination of some previous plots that overlap
+    red_cross_vs_red_diamond_vs_red_diamond_then_red_cross:
+      patterns:
+        - "^red_cross$"
+        - "^red_diamond_then_red_cross$"
+        - "^red_diamond$"
+      features_to_show:
+        - "red"
+        - "cross"
+        - "diamond"
+    # Order of training objectives influences generalisation
+    red_diamond_then_black_diamond_vs_black_diamond_then_red_diamond:
+      patterns:
+        - "^red_diamond_then_black_diamond$"
+        - "^black_diamond_then_red_diamond$"
+      features_to_show:
+        - "red"
+        - "black"
+        - "diamond"
+
+  two_stage_plot_config:
+    value_persistence: true
+    ordering_effects: true
+    ordering_effects_variants: ["all", "no_shared", "one_shared"]
+    value_inhibition: true
+
+#  # Define run categories for shape/colour preference heatmaps
+  run_categories:
+    base_no_distractors:
+      required: []
+      excluded: ["and", "then", "distractor"]
+      group_finetune: false
+    base_with_distractors:
+      required: ["distractor"]
+      excluded: ["and", "then"]
+      group_finetune: false
+      max_prefs_per_plot: 12
+    finetune_no_distractors:
+      required: ["then"]
+      excluded: ["and", "distractor"]
+      group_finetune: true
+    finetune_with_distractors:
+      required: ["then", "distractor"]
+      excluded: ["and"]
+      group_finetune: false
+      max_prefs_per_plot: 12
+
+#    base:
+#      required: []
+#      excluded: ["distill"]
+#      group_finetune: false
+#    no_distractor_base:
+#      required: []
+#      excluded: ["distill", "distractor"]
+#      group_finetune: false
+#    distractor_base:
+#      required: ["distractor"]
+#      excluded: ["distill"]
+#      group_finetune: false
+#    distill:
+#      required: ["distill"]
+#      excluded: ["distractor", "then", "and"]
+#      group_finetune: false
+#    finetune:
+#      required: ["distill", "then"]
+#      excluded: ["and"]
+#      group_finetune: true
+#    finetune_no_distractors:
+#      required: ["distill", "then"]
+#      excluded: ["distractor", "and"]
+#      group_finetune: true
+#    finetune_with_distractor:
+#      required: ["distill", "then", "distractor"]
+#      excluded: ["and"]
+#      group_finetune: false
+#    multi_distill:
+#      required: ["distill", "and"]
+#      excluded: ["distractor", "then"]
+#      group_finetune: false
+#    multi_distill_finetune:
+#      required: ["distill", "then", "and"]
+#      excluded: ["distractor"]
+#      group_finetune: true
+

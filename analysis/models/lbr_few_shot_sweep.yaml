@@ -1,0 +1,21 @@
+name: "few_shot_sweep_multi_kl_model"
+function_name: "fit_developmental_model"
+
+function_kwargs:
+  model_type: "multi_kl"
+  num_epochs: 3
+  save_name: "RUN_NAME"
+  model_kwargs:
+    value_function:
+      structure: "upper_triangular"
+
+  # Enable few-shot sweep validation
+  few_shot_sweep_kwargs:
+    agent_counts: [3, 10, 30, 50]
+    n_trials_per_size: 3
+    seed: 42
+
+  get_runs_from_wandb_kwargs:
+    name_regex_filter: "maze_eval_"
+    wandb_filters:
+      "displayName": {"$regex": "^maze_eval_"}

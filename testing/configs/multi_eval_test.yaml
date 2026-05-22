@@ -1,0 +1,43 @@
+name: maze_eval_black_cross_test
+function_name: multi_eval_agent
+time_stamp_name: false
+wandb_project: rl_generalisation
+
+function_kwargs:
+  env_kwargs_base:
+    agent: grey_circle
+    id: Maze-v0
+    observation_mode: image
+    size: 8
+
+  env_kwargs_list:
+  - goals:
+    - black_cross
+  - goals:
+    - black_plus
+  - goals:
+    - black_circle
+  - goals:
+    - black_cross
+    - red_plus
+  - goals:
+    - red_cross
+  - goals:
+    - red_plus
+  - goals:
+    - red_circle
+  - goals:
+    - red_cross
+    - black_plus
+  - goals:
+    - red_cross
+    - blue_plus
+
+  get_agent_kwargs:
+    algorithm: PPO
+    checkpoint_path: from_scratch/checkpoints/maze_ppo_black_cross/rl_model_3000000_steps.zip
+
+  log_name_fn: goals
+
+  rollout_kwargs:
+    n_episodes: 100

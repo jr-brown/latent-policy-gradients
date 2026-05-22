@@ -1,0 +1,26 @@
+name: "few_shot_sweep_dense_p2"
+function_name: "fit_developmental_model"
+
+# Parallel shard p2 of the dense few-shot sweep (agent_counts split across
+# 4 skip_main_training jobs on the 8-vCPU/64GB pod). Distinct name => distinct
+# JSON summary key; merged for the report. ~5.3GB peak RSS/proc measured.
+function_kwargs:
+  model_type: "multi_kl"
+  num_epochs: 3
+  save_name: "RUN_NAME"
+  offline: true
+  skip_main_training: true
+  no_goal_mode: "full_distribution"
+  model_kwargs:
+    value_function:
+      structure: "upper_triangular"
+
+  few_shot_sweep_kwargs:
+    agent_counts: [5, 10]
+    n_trials_per_size: 5
+    seed: 42
+
+  get_runs_from_wandb_kwargs:
+    name_regex_filter: "maze_eval_"
+    wandb_filters:
+      "displayName": {"$regex": "^maze_eval_"}

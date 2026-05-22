@@ -1,0 +1,58 @@
+name: "multi_distill_maze_student_test"
+function_name: "distill_rl"
+time_stamp_name: False
+
+function_kwargs:
+  env_kwargs:
+    id: "Maze-v0"
+    size: 8
+    observation_mode: "image"
+    agent: "grey_circle"
+
+  env_kwargs_for_multi_distill:
+    - goals: ["red_cross"]
+    - goals: ["red_plus"]
+
+  teacher_get_agent_kwargs:
+    - algorithm: "PPO"
+      checkpoint_path: "from_scratch/checkpoints/maze_ppo_red_cross/rl_model_3000000_steps.zip"
+    - algorithm: "PPO"
+      checkpoint_path: "from_scratch/checkpoints/maze_ppo_red_plus/rl_model_3000000_steps.zip"
+
+  student_get_agent_kwargs:
+    algorithm: "PPO"
+    create_agent_kwargs:
+      policy: "CnnPolicy"
+      learning_rate: 0.0001
+      n_steps: 256
+      batch_size: 64
+      n_epochs: 10
+      gamma: 0.95
+      gae_lambda: 0.9
+      clip_range: 0.2
+      ent_coef: 0.01
+      vf_coef: 0.5
+      max_grad_norm: 0.5
+  
+  distill_student_kwargs:
+    num_epochs: 30
+    batch_size: 64
+    temperature: 2.0
+    learning_rate: 0.0003
+    save_folder: "testing/distilled_models/RUN_NAME"
+    epochs_per_checkpoint: 5
+
+  total_teacher_rollout_steps: 50_000
+  total_teacher_validation_rollout_steps: 10_000
+
+  eval_student_kwargs:
+    env_kwargs:
+      id: "Maze-v0"
+      size: 8
+      observation_mode: "image"
+      agent: "grey_circle"
+      goals: ["red_diamond", "black_cross", "black_plus"]
+    rollout_kwargs:
+      visualise_episodes: 3
+      n_episodes: 50
+      should_wait_for_user: True

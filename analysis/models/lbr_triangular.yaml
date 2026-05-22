@@ -1,0 +1,15 @@
+name: "fit_klr_triangular"
+function_name: "fit_developmental_model"
+
+function_kwargs:
+  model_type: "multi_kl"
+  num_epochs: 1
+
+  model_kwargs:
+    value_function:
+      structure: "upper_triangular"
+
+  get_runs_from_wandb_kwargs:
+    name_regex_filter: "maze_eval_"
+    wandb_filters:
+      "displayName": {"$regex": "^maze_eval_"}

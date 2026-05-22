@@ -1,0 +1,16 @@
+name: "visualise_maze_checkpoint"
+function_name: "eval_agent"
+
+function_kwargs:
+  env_kwargs:
+    id: "Maze-v0"
+    size: 5
+
+  get_agent_kwargs:
+    checkpoint_path: "testing/distilled_models/distill_maze_student/student_model.zip"
+    algorithm: "PPO"
+  
+  eval_policy_kwargs:
+    visualise_episodes: 5
+    log_rewards: True
+    max_steps_per_episode: 50
